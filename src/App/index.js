@@ -5,14 +5,17 @@ import AppLayout from '../Components/Layout/AppLayout';
 import Welcome from '../Components/Welcome';
 import Buttons from '../Components/Buttons';
 import AppBar from '../Components/Layout/AppBar';
+import { AppProvider } from '../Components/Context/AppProvider';
 
 function App() {
 	return (
-		<AppLayout>
-			<AppBar />
-			<Welcome name='Doğu' />
-			<Buttons />
-		</AppLayout>
+		<AppProvider>
+			<AppLayout>
+				<AppBar />
+				<Welcome name='Doğu' />
+				<Buttons />
+			</AppLayout>
+		</AppProvider>
 	);
 }
 
