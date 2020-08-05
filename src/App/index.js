@@ -56,7 +56,6 @@ function App() {
 			<MyButton>Hello</MyButton>
 			<MyButton primary>Primary</MyButton>
 			<MyButton outlined>Outlined</MyButton>
-			<FlamedButton>Flamed</FlamedButton>
 		</div>
 	);
 }
