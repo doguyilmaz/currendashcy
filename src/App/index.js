@@ -5,7 +5,7 @@ import AppLayout from '../Components/Layout/AppLayout';
 import Welcome from '../Components/Welcome';
 import Buttons from '../Components/Buttons';
 import AppBar from '../Components/Layout/AppBar';
-import { AppProvider } from '../Components/Context/AppProvider';
+import { AppProvider } from '../Components/Context/AppContext/AppProvider';
 
 function App() {
 	return (
