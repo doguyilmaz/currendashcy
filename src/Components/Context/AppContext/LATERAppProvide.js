@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from 'react';
+import React, { createContext, useReducer, useMemo, useCallback } from 'react';
 import appReducer from './LATERAppReducer';
 
 const AppContext = createContext();
@@ -12,12 +12,14 @@ const AppProvide = (props) => {
 
 	const [state, dispatch] = useReducer(appReducer, initialState);
 
-	const console = () => {
+	const console = useCallback(() => {
 		console.log('context');
-	};
+	}, []);
+
+	const providerValue = useMemo(() => ({ state, console }), [state, console]);
 
 	return (
-		<AppContext.Provider value={(state, console)}>
+		<AppContext.Provider value={providerValue}>
 			{props.children}
 		</AppContext.Provider>
 	);
