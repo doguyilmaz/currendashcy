@@ -2,17 +2,17 @@ import React from 'react';
 import './App.css';
 
 import AppLayout from '../Components/Layout/AppLayout';
-import Welcome from '../Components/Welcome';
+import Settings from '../Components/Settings';
 import Buttons from '../Components/Buttons';
 import AppBar from '../Components/Layout/AppBar';
-import { AppProvider } from '../Components/Context/AppProvider';
+import { AppProvider } from '../Components/Context/AppContext/AppProvider';
 
 function App() {
 	return (
 		<AppProvider>
 			<AppLayout>
 				<AppBar />
-				<Welcome name='Doğu' />
+				<Settings />
 				<Buttons />
 			</AppLayout>
 		</AppProvider>
