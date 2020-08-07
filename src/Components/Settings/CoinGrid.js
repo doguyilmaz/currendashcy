@@ -10,16 +10,16 @@ export const CoinGridStyled = styled.div`
 	margin-top: 30px;
 `;
 
-const getCoinListToDisplay = (coinList, favSection) => {
-	return Object.keys(coinList).slice(0, favSection ? 10 : 100);
+const getCoinListToDisplay = (coinList, favSection, favourites) => {
+	return favSection ? favourites : Object.keys(coinList).slice(0, 100);
 };
 
 const CoinGrid = ({ favSection }) => {
-	const { coinList } = useContext(AppContext);
+	const { coinList, favourites } = useContext(AppContext);
 
 	return (
 		<CoinGridStyled>
-			{getCoinListToDisplay(coinList, favSection).map((coinKey) => (
+			{getCoinListToDisplay(coinList, favSection, favourites).map((coinKey) => (
 				<CoinTile favSection={favSection} key={coinKey} coinKey={coinKey} />
 			))}
 		</CoinGridStyled>

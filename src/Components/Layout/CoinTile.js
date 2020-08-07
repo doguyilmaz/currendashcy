@@ -4,14 +4,36 @@ import { SelectableTile, RemovableTile, DisabledTile } from '../Layout/Tile';
 import CoinHeaderGrid from './CoinHeaderGrid';
 import CoinImage from './CoinImage';
 
+const clickCoinHandler = (favSection, coinKey, addCoin, removeCoin) => {
+	return favSection
+		? () => {
+				removeCoin(coinKey);
+		  }
+		: () => {
+				addCoin(coinKey);
+		  };
+};
+
 const CoinTile = ({ coinKey, favSection }) => {
-	const { coinList } = useContext(AppContext);
+	const { coinList, addCoin, removeCoin, isFavourited } = useContext(
+		AppContext
+	);
 	const coin = coinList[coinKey];
 
-	let TileType = favSection ? RemovableTile : SelectableTile;
+	// let TileType = SelectableTile;
+	// if (favSection) TileType = RemovableTile;
+	// else if (isFavourited(coinKey)) TileType = DisabledTile;
+
+	let TileType = favSection
+		? RemovableTile
+		: isFavourited(coinKey)
+		? DisabledTile
+		: SelectableTile;
 
 	return (
-		<TileType>
+		<TileType
+			onClick={clickCoinHandler(favSection, coinKey, addCoin, removeCoin)}
+		>
 			<CoinHeaderGrid
 				favSection={favSection}
 				name={coin.CoinName}
