@@ -1,4 +1,12 @@
 import React from 'react';
+import _ from 'lodash';
+const cc = require('cryptocompare');
+// LATER: change api key
+cc.setApiKey(
+	'f3823db3d72b1912d435f973aa3015c1c858beb3a7ad9126886d4388b5585267'
+);
+
+const MAX_FAVOURITES = 10;
 
 export const AppContext = React.createContext({
 	page: 'dashboard',
@@ -13,13 +21,40 @@ export class AppProvider extends React.Component {
 			locale: 'en',
 			theme: 'light',
 			page: 'dashboard',
+			favourites: [],
 			...this.savedSettings(),
 			setLocale: this.setLocale,
 			setTheme: this.setTheme,
 			setPage: this.setPage,
+			addCoin: this.addCoin,
+			removeCoin: this.removeCoin,
+			isFavourited: this.isFavourited,
 			confirmFav: this.confirmFavourites,
 		};
 	}
+	componentDidMount() {
+		this.fetchCoins();
+	}
+
+	fetchCoins = async () => {
+		let coinList = (await cc.coinList()).Data;
+		this.setState({ coinList });
+	};
+
+	addCoin = (key) => {
+		let favourites = [...this.state.favourites];
+		if (favourites.length < MAX_FAVOURITES) {
+			favourites.push(key);
+			this.setState({ favourites });
+		}
+	};
+
+	removeCoin = (key) => {
+		let favourites = [...this.state.favourites];
+		this.setState({ favourites: _.pull(favourites, key) });
+	};
+
+	isFavourited = (key) => _.includes(this.state.favourites, key);
 
 	confirmFavourites = () => {
 		this.setState({
@@ -30,27 +65,32 @@ export class AppProvider extends React.Component {
 			'currenDashcy',
 			JSON.stringify({
 				user: 'Dou',
-				token: '231231241@€qwe23.123',
+				favourites: this.state.favourites,
 			})
 		);
 	};
 
 	// Refactor
-	// FIX: if condition logic
 	savedSettings = () => {
 		const currendDashcyData = JSON.parse(localStorage.getItem('currenDashcy'));
 		const locale = localStorage.getItem('locale');
 		const theme = localStorage.getItem('theme');
 
-		return !currendDashcyData
-			? {
-					page: 'settings',
-					firstVisit: true,
-			  }
-			: {
-					locale: locale || this.state.locale,
-					theme: theme || this.state.theme,
-			  };
+		let localData = {};
+
+		if (!currendDashcyData) {
+			localData = {
+				page: 'settings',
+				firstVisit: true,
+			};
+		} else {
+			const { favourites } = currendDashcyData;
+			localData = {
+				favourites,
+			};
+		}
+
+		return { ...localData, locale: locale || 'tr', theme: theme || 'light' };
 	};
 
 	setPage = (page) => this.setState({ page });
