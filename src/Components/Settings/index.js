@@ -5,8 +5,8 @@ import Page from '../Layout/Page';
 
 const index = () => {
 	return (
-		<Page>
-			<Welcome name='Doğu' />
+		<Page name='settings'>
+			<Welcome />
 			<ConfirmButton />
 		</Page>
 	);
