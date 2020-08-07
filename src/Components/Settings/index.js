@@ -8,6 +8,7 @@ const index = () => {
 	return (
 		<Page name='settings'>
 			<Welcome />
+			<CoinGrid favSection />
 			<ConfirmButton />
 			<CoinGrid />
 		</Page>

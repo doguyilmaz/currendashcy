@@ -1,19 +1,24 @@
 import React, { useContext } from 'react';
-import styled from 'styled-components';
 import { AppContext } from '../Context/AppContext/AppProvider';
-import { Tile, SelectableTile } from '../Layout/Tile';
+import { SelectableTile, RemovableTile, DisabledTile } from '../Layout/Tile';
 import CoinHeaderGrid from './CoinHeaderGrid';
 import CoinImage from './CoinImage';
 
-const CoinTile = ({ coinKey }) => {
+const CoinTile = ({ coinKey, favSection }) => {
 	const { coinList } = useContext(AppContext);
 	const coin = coinList[coinKey];
 
+	let TileType = favSection ? RemovableTile : SelectableTile;
+
 	return (
-		<SelectableTile>
-			<CoinHeaderGrid name={coin.CoinName} symbol={coin.Symbol} />
+		<TileType>
+			<CoinHeaderGrid
+				favSection={favSection}
+				name={coin.CoinName}
+				symbol={coin.Symbol}
+			/>
 			<CoinImage coin={coin} />
-		</SelectableTile>
+		</TileType>
 	);
 };
 
