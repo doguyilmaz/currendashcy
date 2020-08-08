@@ -9,17 +9,30 @@ export const CoinGridStyled = styled.div`
 	grid-gap: 14px;
 	margin-top: 30px;
 `;
-
-const getCoinListToDisplay = (coinList, favSection, favourites) => {
-	return favSection ? favourites : Object.keys(coinList).slice(0, 100);
+const getCoinListToDisplay = (
+	coinList,
+	filteredCoins,
+	favSection,
+	favourites
+) => {
+	return favSection
+		? favourites
+		: filteredCoins && Object.keys(filteredCoins).length > 0
+		? Object.keys(filteredCoins)
+		: Object.keys(coinList).slice(0, 100);
 };
 
 const CoinGrid = ({ favSection }) => {
-	const { coinList, favourites } = useContext(AppContext);
+	const { coinList, filteredCoins, favourites } = useContext(AppContext);
 
 	return (
 		<CoinGridStyled>
-			{getCoinListToDisplay(coinList, favSection, favourites).map((coinKey) => (
+			{getCoinListToDisplay(
+				coinList,
+				filteredCoins,
+				favSection,
+				favourites
+			).map((coinKey) => (
 				<CoinTile favSection={favSection} key={coinKey} coinKey={coinKey} />
 			))}
 		</CoinGridStyled>

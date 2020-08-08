@@ -30,6 +30,7 @@ export class AppProvider extends React.Component {
 			removeCoin: this.removeCoin,
 			isFavourited: this.isFavourited,
 			confirmFav: this.confirmFavourites,
+			setFilteredCoins: this.setFilteredCoins,
 		};
 	}
 	componentDidMount() {
@@ -94,6 +95,8 @@ export class AppProvider extends React.Component {
 	};
 
 	setPage = (page) => this.setState({ page });
+
+	setFilteredCoins = (filteredCoins) => this.setState({ filteredCoins });
 
 	setLocale = () => {
 		this.setState({
