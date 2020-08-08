@@ -35,6 +35,7 @@ export class AppProvider extends React.Component {
 	}
 	componentDidMount() {
 		this.fetchCoins();
+		this.fetchCurrencies();
 	}
 
 	fetchCoins = async () => {
@@ -50,6 +51,25 @@ export class AppProvider extends React.Component {
 		}
 	};
 
+	fetchCurrencies = async () => {
+		if (this.state.firstVisit) return;
+		const currencies = await this.currencies();
+		this.setState({ currencies });
+	};
+
+	currencies = async () => {
+		let returnData = [];
+		for (let i = 0; i < this.state.favourites.length; i++) {
+			try {
+				const priceData = await cc.priceFull(this.state.favourites[i], 'USD');
+				returnData.push(priceData);
+			} catch (error) {
+				console.warn('Fething currency error => ', error);
+			}
+		}
+		return returnData;
+	};
+
 	removeCoin = (key) => {
 		let favourites = [...this.state.favourites];
 		this.setState({ favourites: _.pull(favourites, key) });
@@ -58,10 +78,15 @@ export class AppProvider extends React.Component {
 	isFavourited = (key) => _.includes(this.state.favourites, key);
 
 	confirmFavourites = () => {
-		this.setState({
-			firstVisit: false,
-			page: 'dashboard',
-		});
+		this.setState(
+			{
+				firstVisit: false,
+				page: 'dashboard',
+			},
+			() => {
+				this.fetchCurrencies();
+			}
+		);
 		localStorage.setItem(
 			'currenDashcy',
 			JSON.stringify({
