@@ -2,7 +2,8 @@ import React from 'react';
 import Welcome from './Welcome';
 import ConfirmButton from './ConfirmButton';
 import Page from '../Layout/Page';
-import CoinGrid from './CoinGrid';
+import CoinGrid from '../Layout/CoinGrid';
+import Search from '../Layout/Search';
 
 const index = () => {
 	return (
@@ -10,6 +11,7 @@ const index = () => {
 			<Welcome />
 			<CoinGrid favSection />
 			<ConfirmButton />
+			<Search />
 			<CoinGrid />
 		</Page>
 	);
