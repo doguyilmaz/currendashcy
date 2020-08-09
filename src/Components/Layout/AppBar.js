@@ -35,13 +35,21 @@ const ControlButtonElem = styled.div`
 				text-shadow: 0px 0px 25px yellow;
 			}
 		`}
+  $${(props) =>
+		props.hidden &&
+		css`
+			display: none;
+		`}
 `;
 
 const ControlButton = ({ name, lang = false, theme = false }) => {
-	const { page, setPage, setLocale, setTheme } = useContext(AppContext);
+	const { page, setPage, setLocale, setTheme, firstVisit } = useContext(
+		AppContext
+	);
 	return (
 		<ControlButtonElem
 			active={page === name}
+			hidden={firstVisit && name === 'dashboard'}
 			onClick={() => {
 				!lang && !theme ? setPage(name) : !lang ? setTheme() : setLocale();
 			}}

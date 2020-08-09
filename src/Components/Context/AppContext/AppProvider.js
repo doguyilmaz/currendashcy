@@ -8,6 +8,8 @@ cc.setApiKey(
 );
 
 // TODO: let the user select this things
+// TODO: clear data local storage favs etc.
+// TODO: theme all / languages
 const MAX_FAVOURITES = 10;
 const TIME_UNITS = 14;
 
