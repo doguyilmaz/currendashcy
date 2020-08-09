@@ -1,13 +1,7 @@
 import React, { useContext } from 'react';
-import styled from 'styled-components';
+import { CurrencyStyled } from '../Constants/Dashboard';
 import { AppContext } from '../Context/AppContext/AppProvider';
 import CurrencyBox from './CurrencyBox';
-
-const CurrencyStyled = styled.div`
-	display: grid;
-	grid-template-columns: repeat(5, 1fr);
-	grid-gap: 15px;
-`;
 
 const CurrencyGrid = () => {
 	const { currencies } = useContext(AppContext);
