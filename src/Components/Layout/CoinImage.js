@@ -1,10 +1,11 @@
 import React from 'react';
+import { CoinImageStyled } from '../Constants/Dashboard';
 
-const CoinImage = ({ coin, style }) => {
+const CoinImage = ({ coin, spotlight }) => {
 	return (
-		<img
+		<CoinImageStyled
 			alt={coin.CoinSymbol}
-			style={style || { height: '50px' }}
+			spotlight={spotlight}
 			src={`http://cryptocompare.com/${coin.ImageUrl}`}
 		/>
 	);

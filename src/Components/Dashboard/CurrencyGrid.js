@@ -9,7 +9,7 @@ const CurrencyGrid = () => {
 	return (
 		<CurrencyStyled>
 			{currencies.map((currency, idx) => (
-				<CurrencyBox key={currency} currency={currency} index={idx} />
+				<CurrencyBox key={idx} currency={currency} index={idx} />
 			))}
 		</CurrencyStyled>
 	);

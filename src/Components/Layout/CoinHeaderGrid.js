@@ -20,10 +20,15 @@ export const DeleteIcon = styled.div`
 	}
 `;
 
+export const CoinName = styled.div`
+	text-align: center;
+	margin: auto;
+`;
+
 const CoinHeaderGrid = ({ name, symbol, favSection }) => {
 	return (
 		<CoinHeaderGridStyled>
-			<div>{name}</div>
+			<CoinName>{name}</CoinName>
 			{favSection ? (
 				<DeleteIcon>X</DeleteIcon>
 			) : (

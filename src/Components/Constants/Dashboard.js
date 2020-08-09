@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 import { SelectableTile } from '../Layout/Tile';
-import { fontSize3, fontSizeBig } from './Styles';
+import { fontSize3, fontSizeBig, wheatBoxShadow } from './Styles';
 
 export const RatePercentage = styled.div`
 	justify-self: right;
@@ -39,10 +39,40 @@ export const CurrencyTileStyled = styled(SelectableTile)`
 		css`
 			${fontSize3}
 		`}
+
+	${(props) =>
+		props.currentFav &&
+		css`
+			${wheatBoxShadow};
+			pointer-events: none;
+		`}
 `;
 
 export const CurrencyStyled = styled.div`
 	display: grid;
 	grid-template-columns: repeat(5, 1fr);
 	grid-gap: 15px;
+`;
+
+export const ChartGrid = styled.div`
+	display: grid;
+	grid-gap: 15px;
+	grid-template-columns: 1fr 3fr;
+	margin-top: 20px;
+`;
+
+export const SpotlightName = styled.h2`
+	text-align: center;
+`;
+
+export const CoinImageStyled = styled.img`
+	// display: block;
+	// margin: auto;
+	height: 60px;
+
+	${(props) =>
+		props.spotlight &&
+		css`
+			height: 200px;
+		`};
 `;
