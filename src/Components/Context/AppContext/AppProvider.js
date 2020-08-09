@@ -31,6 +31,7 @@ export class AppProvider extends React.Component {
 			isFavourited: this.isFavourited,
 			confirmFav: this.confirmFavourites,
 			setFilteredCoins: this.setFilteredCoins,
+			setCurrentFav: this.setCurrentFav,
 		};
 	}
 	componentDidMount() {
@@ -79,10 +80,13 @@ export class AppProvider extends React.Component {
 	isFavourited = (key) => _.includes(this.state.favourites, key);
 
 	confirmFavourites = () => {
+		const currentFav = this.state.favourites[0];
+
 		this.setState(
 			{
 				firstVisit: false,
 				page: 'dashboard',
+				currentFav,
 			},
 			() => {
 				this.fetchCurrencies();
@@ -93,6 +97,20 @@ export class AppProvider extends React.Component {
 			JSON.stringify({
 				user: 'Dou',
 				favourites: this.state.favourites,
+				currentFav,
+			})
+		);
+	};
+
+	setCurrentFav = (symbol) => {
+		this.setState({
+			currentFav: symbol,
+		});
+		localStorage.setItem(
+			'currenDashcy',
+			JSON.stringify({
+				...JSON.parse(localStorage.getItem('currenDashcy')),
+				currentFav: symbol,
 			})
 		);
 	};
@@ -111,9 +129,10 @@ export class AppProvider extends React.Component {
 				firstVisit: true,
 			};
 		} else {
-			const { favourites } = currendDashcyData;
+			const { favourites, currentFav } = currendDashcyData;
 			localData = {
 				favourites,
+				currentFav,
 			};
 		}
 

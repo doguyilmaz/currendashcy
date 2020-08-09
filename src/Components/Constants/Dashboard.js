@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 import { SelectableTile } from '../Layout/Tile';
-import { fontSize3, fontSizeBig } from './Styles';
+import { fontSize3, fontSizeBig, wheatBoxShadow } from './Styles';
 
 export const RatePercentage = styled.div`
 	justify-self: right;
@@ -38,6 +38,13 @@ export const CurrencyTileStyled = styled(SelectableTile)`
 		props.compact &&
 		css`
 			${fontSize3}
+		`}
+
+	${(props) =>
+		props.currentFav &&
+		css`
+			${wheatBoxShadow};
+			pointer-events: none;
 		`}
 `;
 
