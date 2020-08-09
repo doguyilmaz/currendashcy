@@ -53,3 +53,26 @@ export const CurrencyStyled = styled.div`
 	grid-template-columns: repeat(5, 1fr);
 	grid-gap: 15px;
 `;
+
+export const ChartGrid = styled.div`
+	display: grid;
+	grid-gap: 15px;
+	grid-template-columns: 1fr 3fr;
+	margin-top: 20px;
+`;
+
+export const SpotlightName = styled.h2`
+	text-align: center;
+`;
+
+export const CoinImageStyled = styled.img`
+	// display: block;
+	// margin: auto;
+	height: 60px;
+
+	${(props) =>
+		props.spotlight &&
+		css`
+			height: 200px;
+		`};
+`;
