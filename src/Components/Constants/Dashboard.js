@@ -1,6 +1,12 @@
 import styled, { css } from 'styled-components';
 import { SelectableTile } from '../Layout/Tile';
-import { fontSize3, fontSizeBig, wheatBoxShadow } from './Styles';
+import {
+	fontSize3,
+	fontSizeBig,
+	wheatBoxShadow,
+	backgroundColor2,
+	fontSize2,
+} from './Styles';
 
 export const RatePercentage = styled.div`
 	justify-self: right;
@@ -75,4 +81,16 @@ export const CoinImageStyled = styled.img`
 		css`
 			height: 200px;
 		`};
+`;
+
+export const SelectStyled = styled.select`
+	background-color: black;
+	color: wheat;
+	${fontSize2};
+	margin: 5px;
+  padding: 2px;
+  border: 1px solid
+  border-radius: 5px;
+  float: right;
+  outline: none;
 `;

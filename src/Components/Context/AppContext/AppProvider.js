@@ -11,7 +11,6 @@ cc.setApiKey(
 // TODO: clear data local storage favs etc.
 // TODO: theme all / languages
 const MAX_FAVOURITES = 10;
-const TIME_UNITS = 14;
 
 export const AppContext = React.createContext({
 	page: 'dashboard',
@@ -27,6 +26,8 @@ export class AppProvider extends React.Component {
 			theme: 'light',
 			page: 'dashboard',
 			favourites: [],
+			historicalInterval: 'months',
+			historicalPeriod: 14,
 			...this.savedSettings(),
 			setLocale: this.setLocale,
 			setTheme: this.setTheme,
@@ -37,6 +38,8 @@ export class AppProvider extends React.Component {
 			confirmFav: this.confirmFavourites,
 			setFilteredCoins: this.setFilteredCoins,
 			setCurrentFav: this.setCurrentFav,
+			changeChartInterval: this.changeChartInterval,
+			changeChartPeriod: this.changeChartPeriod,
 		};
 	}
 	componentDidMount() {
@@ -86,7 +89,10 @@ export class AppProvider extends React.Component {
 				name: this.state.currentFav,
 				data: res.map((value, idx) => [
 					moment()
-						.subtract({ months: TIME_UNITS - idx })
+						.subtract({
+							[this.state.historicalInterval]:
+								this.state.historicalPeriod - idx,
+						})
 						.valueOf(),
 					value.USD,
 				]),
@@ -100,12 +106,14 @@ export class AppProvider extends React.Component {
 	historical = () => {
 		let promises = [];
 
-		for (let units = TIME_UNITS; units > 0; units--) {
+		for (let units = this.state.historicalPeriod; units > 0; units--) {
 			promises.push(
 				cc.priceHistorical(
 					this.state.currentFav,
 					['USD'],
-					moment().subtract({ months: units }).toDate()
+					moment()
+						.subtract({ [this.state.historicalInterval]: units })
+						.toDate()
 				)
 			);
 		}
@@ -205,6 +213,20 @@ export class AppProvider extends React.Component {
 		localStorage.setItem(
 			'theme',
 			this.state.theme === 'light' ? 'dark' : 'light'
+		);
+	};
+
+	changeChartInterval = (value) => {
+		this.setState(
+			{ historicalInterval: value, historical: null },
+			this.fetchHistorical
+		);
+	};
+
+	changeChartPeriod = (value) => {
+		this.setState(
+			{ historicalPeriod: value, historical: null },
+			this.fetchHistorical
 		);
 	};
 
