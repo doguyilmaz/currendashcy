@@ -1,11 +1,13 @@
-export default function () {
+export default function (historical, coinName) {
 	return {
 		title: {
-			text: 'Historical Data',
+			text: `Historical Data: ${coinName}`,
 		},
 
 		subtitle: {
-			text: `Last Update ${new Date().toLocaleString()}`,
+			text: `Last Update -> DATA: ${new Date(
+				historical[0].data[historical[0].data.length - 1][0]
+			).toLocaleDateString()} - PAGE: ${new Date().toLocaleString()}`,
 		},
 
 		yAxis: {
@@ -15,9 +17,10 @@ export default function () {
 		},
 
 		xAxis: {
-			accessibility: {
-				rangeDescription: 'Range: 2010 to 2017',
-			},
+			type: 'datetime',
+			// accessibility: {
+			// 	rangeDescription: 'Range: 2010 to 2017',
+			// },
 		},
 
 		credits: {
@@ -61,12 +64,7 @@ export default function () {
 		// 	},
 		// },
 
-		series: [
-			{
-				name: 'Installation',
-				data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175],
-			},
-		],
+		series: historical,
 
 		responsive: {
 			rules: [

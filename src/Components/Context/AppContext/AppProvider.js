@@ -1,12 +1,15 @@
 import React from 'react';
 import _ from 'lodash';
+import moment from 'moment';
 const cc = require('cryptocompare');
 // LATER: change api key
 cc.setApiKey(
 	'f3823db3d72b1912d435f973aa3015c1c858beb3a7ad9126886d4388b5585267'
 );
 
+// TODO: let the user select this things
 const MAX_FAVOURITES = 10;
+const TIME_UNITS = 14;
 
 export const AppContext = React.createContext({
 	page: 'dashboard',
@@ -37,6 +40,7 @@ export class AppProvider extends React.Component {
 	componentDidMount() {
 		this.fetchCoins();
 		this.fetchCurrencies();
+		this.fetchHistorical();
 	}
 
 	fetchCoins = async () => {
@@ -72,6 +76,40 @@ export class AppProvider extends React.Component {
 		return returnData;
 	};
 
+	fetchHistorical = async () => {
+		if (this.state.firstVisit) return;
+		const res = await this.historical();
+		const historical = [
+			{
+				name: this.state.currentFav,
+				data: res.map((value, idx) => [
+					moment()
+						.subtract({ months: TIME_UNITS - idx })
+						.valueOf(),
+					value.USD,
+				]),
+			},
+		];
+		this.setState({
+			historical,
+		});
+	};
+
+	historical = () => {
+		let promises = [];
+
+		for (let units = TIME_UNITS; units > 0; units--) {
+			promises.push(
+				cc.priceHistorical(
+					this.state.currentFav,
+					['USD'],
+					moment().subtract({ months: units }).toDate()
+				)
+			);
+		}
+		return Promise.all(promises);
+	};
+
 	removeCoin = (key) => {
 		let favourites = [...this.state.favourites];
 		this.setState({ favourites: _.pull(favourites, key) });
@@ -87,9 +125,12 @@ export class AppProvider extends React.Component {
 				firstVisit: false,
 				page: 'dashboard',
 				currentFav,
+				prices: null,
+				historical: null,
 			},
 			() => {
 				this.fetchCurrencies();
+				this.fetchHistorical();
 			}
 		);
 		localStorage.setItem(
@@ -103,9 +144,14 @@ export class AppProvider extends React.Component {
 	};
 
 	setCurrentFav = (symbol) => {
-		this.setState({
-			currentFav: symbol,
-		});
+		this.setState(
+			{
+				currentFav: symbol,
+				historical: null,
+			},
+			this.fetchHistorical
+		);
+
 		localStorage.setItem(
 			'currenDashcy',
 			JSON.stringify({

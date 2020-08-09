@@ -37,3 +37,11 @@ export const DisabledTile = styled(Tile)`
 	pointer-events: none;
 	opacity: 0.5;
 `;
+
+export const HistoricalLoadingStyled = styled.div`
+	height: 420px;
+	width: 988px;
+	display: grid;
+	align-items: center;
+	justify-content: center;
+`;

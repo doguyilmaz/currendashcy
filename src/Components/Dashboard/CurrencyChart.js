@@ -3,11 +3,11 @@ import ReactHighCharts from 'react-highcharts';
 import highChartsConfig from './HighChartsConfig';
 import HighChartThemes from '../Constants/HighChartThemes';
 
-import { Tile } from '../Layout/Tile';
+import { Tile, HistoricalLoadingStyled } from '../Layout/Tile';
 import { AppContext } from '../Context/AppContext/AppProvider';
 
 const CurrencyChart = React.memo(() => {
-	const { theme } = useContext(AppContext);
+	const { theme, historical, currentFav, coinList } = useContext(AppContext);
 
 	if (theme === 'light') {
 		ReactHighCharts.Highcharts.setOptions(HighChartThemes.light);
@@ -17,7 +17,15 @@ const CurrencyChart = React.memo(() => {
 
 	return (
 		<Tile>
-			<ReactHighCharts config={highChartsConfig()} />
+			{historical ? (
+				<ReactHighCharts
+					config={highChartsConfig(historical, coinList[currentFav].CoinName)}
+				/>
+			) : (
+				<HistoricalLoadingStyled>
+					Loading Historical Data...
+				</HistoricalLoadingStyled>
+			)}
 		</Tile>
 	);
 });
