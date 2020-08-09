@@ -10,7 +10,14 @@ export const Tile = styled.div`
 	${subtleBoxShadow};
 	${lightBlueBackground};
 	padding: 10px;
+`;
+
+export const SpotlightTile = styled(Tile)`
 	text-align: center;
+	display: grid;
+	grid-template-rows: auto 1fr;
+	justify-content: center;
+	align-items: center;
 `;
 
 export const SelectableTile = styled(Tile)`
