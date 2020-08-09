@@ -1,32 +1,25 @@
 const HighChartThemes = {
 	dark: {
 		colors: [
-			'#DDDF0D',
-			'#55BF3B',
-			'#DF5353',
-			'#7798BF',
-			'#aaeeee',
-			'#ff0066',
-			'#eeaaee',
-			'#55BF3B',
-			'#DF5353',
-			'#7798BF',
-			'#aaeeee',
+			'yellow',
+			'coral',
+			'magenta',
+			'lightgreen',
+			'darkred',
+			'blue',
+			'rebeccapurple',
+			'orange',
+			'darkgreen',
+			'teal',
 		],
 		chart: {
-			backgroundColor: {
-				linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
-				stops: [
-					[0, 'rgb(48, 48, 96)'],
-					[1, 'rgb(0, 0, 0)'],
-				],
-			},
+			backgroundColor: 'dark',
 			borderColor: '#000000',
-			borderWidth: 2,
+			borderWidth: 0,
 			className: 'dark-container',
-			plotBackgroundColor: 'rgba(255, 255, 255, .1)',
+			plotBackgroundColor: 'rgba(255, 255, 255, 0)',
 			plotBorderColor: '#CCCCCC',
-			plotBorderWidth: 1,
+			plotBorderWidth: 0,
 		},
 		title: {
 			style: {
