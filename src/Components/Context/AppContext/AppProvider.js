@@ -53,7 +53,8 @@ export class AppProvider extends React.Component {
 
 	fetchCurrencies = async () => {
 		if (this.state.firstVisit) return;
-		const currencies = await this.currencies();
+		let currencies = await this.currencies();
+		currencies = currencies.filter((currency) => Object.keys(currency).length);
 		this.setState({ currencies });
 	};
 
