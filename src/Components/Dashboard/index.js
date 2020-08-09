@@ -4,6 +4,7 @@ import Page from '../Layout/Page';
 import CurrencyGrid from './CurrencyGrid';
 import CoinSpotlight from './CoinSpotlight';
 import { ChartGrid } from '../Constants/Dashboard';
+import CurrencyChart from './CurrencyChart';
 
 const index = () => {
 	return (
@@ -11,7 +12,7 @@ const index = () => {
 			<CurrencyGrid />
 			<ChartGrid>
 				<CoinSpotlight />
-				<div>Chart</div>
+				<CurrencyChart />
 			</ChartGrid>
 		</Page>
 	);
