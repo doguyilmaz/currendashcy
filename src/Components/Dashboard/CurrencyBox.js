@@ -24,7 +24,7 @@ const CurrencyTile = ({ symbol, data, compact }) => {
 		>
 			<CoinHeaderGridStyled>
 				<div>{symbol} </div>
-				<RatePercentage>{toFixCustom(change24)} </RatePercentage>
+				<RatePercentage>{toFixCustom(change24)}% </RatePercentage>
 				<TickerCurrency negative={change24 < 0}>
 					${toFixCustom(price)}
 				</TickerCurrency>
