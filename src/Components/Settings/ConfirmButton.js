@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { AppContext } from '../Context/AppContext/AppProvider';
-import { fontSize1, greenBoxShadow, color3 } from '../Constants/Styles';
+import { fontSize1, wheatBoxShadow, color3 } from '../Constants/Styles';
 
 const ConfirmButtonElem = styled.div`
 	margin: 20px;
@@ -16,7 +16,7 @@ const ConfirmButtonElem = styled.div`
 	&:hover {
 		background-color: darkgreen;
 		color: lightgray;
-		${greenBoxShadow}
+		${wheatBoxShadow}
 	}
 `;
 
