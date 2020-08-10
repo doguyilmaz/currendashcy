@@ -1,10 +1,18 @@
 import React from 'react';
 import _ from 'lodash';
+import moment from 'moment';
+
+import { lang } from '../../Language/Lang';
+
 const cc = require('cryptocompare');
 // LATER: change api key
 cc.setApiKey(
 	'f3823db3d72b1912d435f973aa3015c1c858beb3a7ad9126886d4388b5585267'
 );
+
+// TODO: clear data local storage favs etc.
+// TODO: theme all / languages
+// TODO: set local storage interval/period
 
 const MAX_FAVOURITES = 10;
 
@@ -22,6 +30,8 @@ export class AppProvider extends React.Component {
 			theme: 'light',
 			page: 'dashboard',
 			favourites: [],
+			historicalInterval: 'months',
+			historicalPeriod: 14,
 			...this.savedSettings(),
 			setLocale: this.setLocale,
 			setTheme: this.setTheme,
@@ -32,11 +42,14 @@ export class AppProvider extends React.Component {
 			confirmFav: this.confirmFavourites,
 			setFilteredCoins: this.setFilteredCoins,
 			setCurrentFav: this.setCurrentFav,
+			changeChartInterval: this.changeChartInterval,
+			changeChartPeriod: this.changeChartPeriod,
 		};
 	}
 	componentDidMount() {
 		this.fetchCoins();
 		this.fetchCurrencies();
+		this.fetchHistorical();
 	}
 
 	fetchCoins = async () => {
@@ -72,6 +85,45 @@ export class AppProvider extends React.Component {
 		return returnData;
 	};
 
+	fetchHistorical = async () => {
+		if (this.state.firstVisit) return;
+		const res = await this.historical();
+		const historical = [
+			{
+				name: this.state.currentFav,
+				data: res.map((value, idx) => [
+					moment()
+						.subtract({
+							[this.state.historicalInterval]:
+								this.state.historicalPeriod - idx,
+						})
+						.valueOf(),
+					value.USD,
+				]),
+			},
+		];
+		this.setState({
+			historical,
+		});
+	};
+
+	historical = () => {
+		let promises = [];
+
+		for (let units = this.state.historicalPeriod; units > 0; units--) {
+			promises.push(
+				cc.priceHistorical(
+					this.state.currentFav,
+					['USD'],
+					moment()
+						.subtract({ [this.state.historicalInterval]: units })
+						.toDate()
+				)
+			);
+		}
+		return Promise.all(promises);
+	};
+
 	removeCoin = (key) => {
 		let favourites = [...this.state.favourites];
 		this.setState({ favourites: _.pull(favourites, key) });
@@ -87,9 +139,12 @@ export class AppProvider extends React.Component {
 				firstVisit: false,
 				page: 'dashboard',
 				currentFav,
+				prices: null,
+				historical: null,
 			},
 			() => {
 				this.fetchCurrencies();
+				this.fetchHistorical();
 			}
 		);
 		localStorage.setItem(
@@ -103,9 +158,14 @@ export class AppProvider extends React.Component {
 	};
 
 	setCurrentFav = (symbol) => {
-		this.setState({
-			currentFav: symbol,
-		});
+		this.setState(
+			{
+				currentFav: symbol,
+				historical: null,
+			},
+			this.fetchHistorical
+		);
+
 		localStorage.setItem(
 			'currenDashcy',
 			JSON.stringify({
@@ -125,7 +185,7 @@ export class AppProvider extends React.Component {
 
 		if (!currendDashcyData) {
 			localData = {
-				page: 'settings',
+				page: this.state.locale === 'en' ? 'settings' : 'ayarlar',
 				firstVisit: true,
 			};
 		} else {
@@ -146,6 +206,14 @@ export class AppProvider extends React.Component {
 	setLocale = () => {
 		this.setState({
 			locale: this.state.locale === 'en' ? 'tr' : 'en',
+			page:
+				this.state.page === ('dashboard' || 'panel')
+					? this.state.locale === 'en'
+						? 'dashboard'
+						: 'panel'
+					: this.state.locale === 'en'
+					? 'settings'
+					: 'ayarlar',
 		});
 		localStorage.setItem('locale', this.state.locale === 'en' ? 'tr' : 'en');
 	};
@@ -157,6 +225,21 @@ export class AppProvider extends React.Component {
 		localStorage.setItem(
 			'theme',
 			this.state.theme === 'light' ? 'dark' : 'light'
+		);
+		window.location.reload();
+	};
+
+	changeChartInterval = (value) => {
+		this.setState(
+			{ historicalInterval: value, historical: null },
+			this.fetchHistorical
+		);
+	};
+
+	changeChartPeriod = (value) => {
+		this.setState(
+			{ historicalPeriod: value, historical: null },
+			this.fetchHistorical
 		);
 	};
 

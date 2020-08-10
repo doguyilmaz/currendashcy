@@ -1,7 +1,9 @@
 import React, { useContext } from 'react';
 import styled, { css } from 'styled-components';
-
+import { mainTone, gray, blue, shadow } from '../Constants/Styles';
 import { AppContext } from '../Context/AppContext/AppProvider';
+
+import { lang } from '../Language/Lang';
 
 const Logo = styled.div`
 	font-size: 1.5rem;
@@ -10,7 +12,7 @@ const Logo = styled.div`
 const Bar = styled.div`
 	display: grid;
 	grid-template-columns: 180px auto 100px 100px 70px 50px;
-	color: gray;
+	color: ${gray};
 	margin-bottom: 30px;
 	text-align: center;
 `;
@@ -20,28 +22,38 @@ const ControlButtonElem = styled.div`
 	transition: 0.2s all;
 
 	&:hover {
-		color: lightblue;
-		text-shadow: 0px 0px 25px lightblue;
+		color: ${blue};
+		text-shadow: 0px 0px 25px ${blue};
 	}
 
 	${(props) =>
 		props.active &&
 		css`
-			color: wheat;
-			text-shadow: 0px 0px 25px yellow;
+			color: ${mainTone};
+			text-shadow: 0px 0px 25px ${shadow};
 
 			&:hover {
-				color: wheat;
-				text-shadow: 0px 0px 25px yellow;
+				color: ${mainTone};
+				text-shadow: 0px 0px 25px ${shadow};
 			}
+		`}
+  $${(props) =>
+		props.hidden &&
+		css`
+			display: none;
 		`}
 `;
 
 const ControlButton = ({ name, lang = false, theme = false }) => {
-	const { page, setPage, setLocale, setTheme } = useContext(AppContext);
+	const { page, setPage, setLocale, setTheme, firstVisit, locale } = useContext(
+		AppContext
+	);
+	const localeLang = locale === 'en' ? lang.en : lang.tr;
+
 	return (
 		<ControlButtonElem
 			active={page === name}
+			hidden={firstVisit && name === localeLang.dashboard}
 			onClick={() => {
 				!lang && !theme ? setPage(name) : !lang ? setTheme() : setLocale();
 			}}
@@ -53,14 +65,18 @@ const ControlButton = ({ name, lang = false, theme = false }) => {
 
 const AppBar = () => {
 	const { locale, theme } = useContext(AppContext);
+	const localeLang = locale === 'en' ? lang.en : lang.tr;
 
 	return (
 		<Bar>
 			<Logo>CurrenDashcy</Logo>
 			<div />
-			<ControlButton active name='dashboard' />
-			<ControlButton name='settings' />
-			<ControlButton theme name={theme} />
+			<ControlButton active name={localeLang.dashboard} />
+			<ControlButton name={localeLang.settings} />
+			<ControlButton
+				theme={theme}
+				name={theme === 'light' ? localeLang.light : localeLang.dark}
+			/>
 			<ControlButton lang name={locale} />
 		</Bar>
 	);

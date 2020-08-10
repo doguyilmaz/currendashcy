@@ -1,43 +1,36 @@
 const HighChartThemes = {
 	dark: {
 		colors: [
-			'#DDDF0D',
-			'#55BF3B',
-			'#DF5353',
-			'#7798BF',
-			'#aaeeee',
-			'#ff0066',
-			'#eeaaee',
-			'#55BF3B',
-			'#DF5353',
-			'#7798BF',
-			'#aaeeee',
+			'yellow',
+			'coral',
+			'magenta',
+			'lightgreen',
+			'darkred',
+			'blue',
+			'rebeccapurple',
+			'orange',
+			'darkgreen',
+			'teal',
 		],
 		chart: {
-			backgroundColor: {
-				linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
-				stops: [
-					[0, 'rgb(48, 48, 96)'],
-					[1, 'rgb(0, 0, 0)'],
-				],
-			},
+			backgroundColor: 'dark',
 			borderColor: '#000000',
-			borderWidth: 2,
+			borderWidth: 0,
 			className: 'dark-container',
-			plotBackgroundColor: 'rgba(255, 255, 255, .1)',
+			plotBackgroundColor: 'rgba(255, 255, 255, 0)',
 			plotBorderColor: '#CCCCCC',
-			plotBorderWidth: 1,
+			plotBorderWidth: 0,
 		},
 		title: {
 			style: {
 				color: '#C0C0C0',
-				font: 'bold 16px "Trebuchet MS", Verdana, sans-serif',
+				font: 'bold 16px "Recursive", Verdana, sans-serif',
 			},
 		},
 		subtitle: {
 			style: {
 				color: '#666666',
-				font: 'bold 12px "Trebuchet MS", Verdana, sans-serif',
+				font: 'bold 12px "Recursive", Verdana, sans-serif',
 			},
 		},
 		xAxis: {
@@ -55,7 +48,7 @@ const HighChartThemes = {
 					color: '#CCC',
 					fontWeight: 'bold',
 					fontSize: '12px',
-					fontFamily: 'Trebuchet MS, Verdana, sans-serif',
+					fontFamily: 'Recursive, Verdana, sans-serif',
 				},
 			},
 		},
@@ -266,40 +259,88 @@ const HighChartThemes = {
 	},
 	light: {
 		colors: [
-			'#058DC7',
-			'#50B432',
-			'#ED561B',
-			'#DDDF00',
-			'#24CBE5',
-			'#64E572',
-			'#FF9655',
-			'#FFF263',
-			'#6AF9C4',
+			'blue',
+			'rebeccapurple',
+			'orange',
+			'darkgreen',
+			'teal',
+			'yellow',
+			'coral',
+			'magenta',
+			'lightgreen',
+			'darkred',
 		],
 		chart: {
-			backgroundColor: {
-				linearGradient: [0, 0, 500, 500],
-				stops: [
-					[0, 'rgb(255, 255, 255)'],
-					[1, 'rgb(240, 240, 255)'],
-				],
+			backgroundColor: 'white',
+			borderColor: '#000000',
+			borderWidth: 0,
+			className: 'light-container',
+			plotBackgroundColor: 'rgba(0, 0, 0, 0)',
+			plotBorderColor: '#CCCCCC',
+			plotBorderWidth: 0,
+		},
+
+		xAxis: {
+			gridLineColor: '#ededed',
+			gridLineWidth: 1,
+			labels: {
+				style: {
+					color: '#A0A0A0',
+				},
+			},
+			lineColor: '#A0A0A0',
+			tickColor: '#A0A0A0',
+			title: {
+				style: {
+					color: '#CCC',
+					fontWeight: 'bold',
+					fontSize: '12px',
+					fontFamily: 'Recursive, Verdana, sans-serif',
+				},
 			},
 		},
+		yAxis: {
+			gridLineColor: '#ededed',
+			labels: {
+				style: {
+					color: '#A0A0A0',
+				},
+			},
+			lineColor: '#A0A0A0',
+			minorTickInterval: null,
+			tickColor: '#A0A0A0',
+			tickWidth: 1,
+			title: {
+				style: {
+					color: '#CCC',
+					fontWeight: 'bold',
+					fontSize: '12px',
+					fontFamily: 'Recursive, Verdana, sans-serif',
+				},
+			},
+		},
+		tooltip: {
+			backgroundColor: 'rgba(0, 0, 0, 0.75)',
+			style: {
+				color: '#F0F0F0',
+			},
+		},
+
 		title: {
 			style: {
-				color: '#000',
-				font: 'bold 16px "Trebuchet MS", Verdana, sans-serif',
+				color: '#C0C0C0',
+				font: 'bold 16px "Recursive", Verdana, sans-serif',
 			},
 		},
 		subtitle: {
 			style: {
 				color: '#666666',
-				font: 'bold 12px "Trebuchet MS", Verdana, sans-serif',
+				font: 'bold 12px "Recursive", Verdana, sans-serif',
 			},
 		},
 		legend: {
 			itemStyle: {
-				font: '9pt Trebuchet MS, Verdana, sans-serif',
+				font: '9pt Recursive, Verdana, sans-serif',
 				color: 'black',
 			},
 			itemHoverStyle: {

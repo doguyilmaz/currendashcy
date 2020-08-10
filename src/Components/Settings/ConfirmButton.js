@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { AppContext } from '../Context/AppContext/AppProvider';
 import { fontSize1, wheatBoxShadow, color3 } from '../Constants/Styles';
 
+import { lang } from '../Language/Lang';
+
 const ConfirmButtonElem = styled.div`
 	margin: 20px;
 	padding: 10px;
@@ -26,12 +28,13 @@ export const CenteredDiv = styled.div`
 `;
 
 const ConfirmButton = () => {
-	const { confirmFav } = useContext(AppContext);
+	const { confirmFav, locale } = useContext(AppContext);
+	const localeLang = locale === 'en' ? lang.en : lang.tr;
 
 	return (
 		<CenteredDiv>
 			<ConfirmButtonElem onClick={confirmFav}>
-				Confirm Favourites
+				{localeLang.confirmFavourites}
 			</ConfirmButtonElem>
 		</CenteredDiv>
 	);

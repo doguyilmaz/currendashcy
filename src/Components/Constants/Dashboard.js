@@ -1,38 +1,49 @@
 import styled, { css } from 'styled-components';
 import { SelectableTile } from '../Layout/Tile';
-import { fontSize3, fontSizeBig, wheatBoxShadow } from './Styles';
+import {
+	fontSize3,
+	fontSizeBig,
+	wheatBoxShadow,
+	selectBg,
+	fontSize2,
+	reddish,
+	greeny,
+	gray,
+	lightgray,
+	mainTone,
+} from './Styles';
 
 export const RatePercentage = styled.div`
 	justify-self: right;
 	align-self: center;
-	color: gray;
+	color: ${gray};
 `;
 
 export const RateArrow = styled(RatePercentage)`
 	${fontSizeBig};
-	color: darkgreen;
+	color: ${greeny};
 
 	${(props) =>
 		props.status &&
 		css`
-			color: darkred;
+			color: ${reddish};
 		`}
 `;
 
 export const TickerCurrency = styled.div`
 	${fontSizeBig};
-	color: darkgreen;
+	color: ${greeny};
 	align-self: center;
 
 	${(props) =>
 		props.negative &&
 		css`
-			color: darkred;
+			color: ${reddish};
 		`}
 `;
 
 export const CurrencyTileStyled = styled(SelectableTile)`
-	color: lightgray;
+	color: ${lightgray};
 	align-self: center;
 	${(props) =>
 		props.compact &&
@@ -75,4 +86,20 @@ export const CoinImageStyled = styled.img`
 		css`
 			height: 200px;
 		`};
+`;
+
+export const SelectStyled = styled.select`
+	background-color: ${selectBg};
+	color: ${mainTone};
+	${fontSize2};
+	margin: 5px;
+  padding: 2px;
+  border: 1px solid
+  border-radius: 5px;
+  float: right;
+  outline: none;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
