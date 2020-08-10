@@ -4,12 +4,17 @@ import { AppContext } from '../Context/AppContext/AppProvider';
 import CurrencyBox from './CurrencyBox';
 
 const CurrencyGrid = () => {
-	const { currencies } = useContext(AppContext);
+	const { currencies, locale } = useContext(AppContext);
 
 	return (
 		<CurrencyStyled>
 			{currencies.map((currency, idx) => (
-				<CurrencyBox key={idx} currency={currency} index={idx} />
+				<CurrencyBox
+					key={idx}
+					currency={currency}
+					index={idx}
+					locale={locale}
+				/>
 			))}
 		</CurrencyStyled>
 	);

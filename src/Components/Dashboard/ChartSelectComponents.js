@@ -1,18 +1,24 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { SelectStyled } from '../Constants/Dashboard';
+
+import { AppContext } from '../Context/AppContext/AppProvider';
+import { lang } from '../Language/Lang';
 
 const ChartSelect = ({
 	changeChartInterval,
 	changeChartPeriod,
 	historicalInterval,
 }) => {
+	const { locale } = useContext(AppContext);
+	const localeLang = locale === 'en' ? lang.en : lang.tr;
+
 	const basicOptionWriter = (val) => {
 		return `${val}-${
 			historicalInterval === 'months'
-				? 'month'
+				? `${localeLang.day}`
 				: historicalInterval === 'weeks'
-				? 'week'
-				: 'day'
+				? `${localeLang.week}`
+				: `${localeLang.month}`
 		}`;
 	};
 	return (
@@ -30,9 +36,9 @@ const ChartSelect = ({
 				defaultValue={'months'}
 				onChange={(e) => changeChartInterval(e.target.value)}
 			>
-				<option value='days'> Days</option>
-				<option value='weeks'> Weeks</option>
-				<option value='months'> Months</option>
+				<option value='days'> {localeLang.days}</option>
+				<option value='weeks'> {localeLang.weeks}</option>
+				<option value='months'> {localeLang.months}</option>
 			</SelectStyled>
 		</>
 	);

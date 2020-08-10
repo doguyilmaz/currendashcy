@@ -7,6 +7,8 @@ import { Tile, HistoricalLoadingStyled } from '../Layout/Tile';
 import { AppContext } from '../Context/AppContext/AppProvider';
 import ChartSelect from './ChartSelectComponents';
 
+import { lang } from '../Language/Lang';
+
 const CurrencyChart = React.memo(() => {
 	const {
 		theme,
@@ -16,7 +18,9 @@ const CurrencyChart = React.memo(() => {
 		changeChartInterval,
 		changeChartPeriod,
 		historicalInterval,
+		locale,
 	} = useContext(AppContext);
+	const localeLang = locale === 'en' ? lang.en : lang.tr;
 
 	if (theme === 'light') {
 		ReactHighCharts.Highcharts.setOptions(HighChartThemes.light);
@@ -33,11 +37,15 @@ const CurrencyChart = React.memo(() => {
 			/>
 			{historical ? (
 				<ReactHighCharts
-					config={highChartsConfig(historical, coinList[currentFav].CoinName)}
+					config={highChartsConfig(
+						historical,
+						coinList[currentFav].CoinName,
+						localeLang
+					)}
 				/>
 			) : (
 				<HistoricalLoadingStyled>
-					Loading Historical Data...
+					{localeLang.loadingHistoricalData}
 				</HistoricalLoadingStyled>
 			)}
 		</Tile>

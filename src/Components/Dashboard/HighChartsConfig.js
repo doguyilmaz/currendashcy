@@ -1,13 +1,17 @@
-export default function (historical, coinName) {
+import { lang } from '../Language/Lang';
+
+export default function (historical, coinName, localeLang) {
 	return {
 		title: {
-			text: `Historical Data: ${coinName}`,
+			text: `${localeLang.historicalData}: ${coinName}`,
 		},
 
 		subtitle: {
-			text: `Last Update -> DATA: ${new Date(
+			text: `${localeLang.lastUpdate} -> ${localeLang.data}: ${new Date(
 				historical[0].data[historical[0].data.length - 1][0]
-			).toLocaleDateString()} - PAGE: ${new Date().toLocaleString()}`,
+			).toLocaleDateString()} - ${
+				localeLang.page
+			}: ${new Date().toLocaleString()}`,
 		},
 
 		yAxis: {
