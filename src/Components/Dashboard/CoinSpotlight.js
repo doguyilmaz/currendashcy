@@ -9,7 +9,9 @@ const CoinSpotlight = () => {
 
 	return (
 		<SpotlightTile>
-			<SpotlightName>{coinList[currentFav].CoinName}</SpotlightName>
+			<SpotlightName>
+				{coinList[currentFav] && coinList[currentFav].CoinName}
+			</SpotlightName>
 			<CoinImage spotlight coin={coinList[currentFav]} />
 		</SpotlightTile>
 	);
