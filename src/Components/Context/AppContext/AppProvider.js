@@ -6,9 +6,7 @@ import { lang } from '../../Language/Lang';
 
 const cc = require('cryptocompare');
 // LATER: change api key
-cc.setApiKey(
-	'f3823db3d72b1912d435f973aa3015c1c858beb3a7ad9126886d4388b5585267'
-);
+cc.setApiKey(process.env.CC_API_KEY);
 
 // TODO: clear data local storage favs etc.
 // TODO: theme all / languages
@@ -190,7 +188,7 @@ export class AppProvider extends React.Component {
 
 		if (!currendDashcyData) {
 			localData = {
-				page: locale === 'en' ? 'settings' : 'ayarlar',
+				page: locale && locale === 'en' ? 'settings' : 'ayarlar',
 				firstVisit: true,
 			};
 		} else {
