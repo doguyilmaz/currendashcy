@@ -1,15 +1,19 @@
 import React from 'react';
 import _ from 'lodash';
 import moment from 'moment';
+
+import { lang } from '../../Language/Lang';
+
 const cc = require('cryptocompare');
 // LATER: change api key
 cc.setApiKey(
 	'f3823db3d72b1912d435f973aa3015c1c858beb3a7ad9126886d4388b5585267'
 );
 
-// TODO: let the user select this things
 // TODO: clear data local storage favs etc.
 // TODO: theme all / languages
+// TODO: set local storage interval/period
+
 const MAX_FAVOURITES = 10;
 
 export const AppContext = React.createContext({
@@ -181,7 +185,7 @@ export class AppProvider extends React.Component {
 
 		if (!currendDashcyData) {
 			localData = {
-				page: 'settings',
+				page: this.state.locale === 'en' ? 'settings' : 'ayarlar',
 				firstVisit: true,
 			};
 		} else {
@@ -202,6 +206,14 @@ export class AppProvider extends React.Component {
 	setLocale = () => {
 		this.setState({
 			locale: this.state.locale === 'en' ? 'tr' : 'en',
+			page:
+				this.state.page === ('dashboard' || 'panel')
+					? this.state.locale === 'en'
+						? 'dashboard'
+						: 'panel'
+					: this.state.locale === 'en'
+					? 'settings'
+					: 'ayarlar',
 		});
 		localStorage.setItem('locale', this.state.locale === 'en' ? 'tr' : 'en');
 	};
@@ -214,6 +226,7 @@ export class AppProvider extends React.Component {
 			'theme',
 			this.state.theme === 'light' ? 'dark' : 'light'
 		);
+		window.location.reload();
 	};
 
 	changeChartInterval = (value) => {

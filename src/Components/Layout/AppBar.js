@@ -3,6 +3,8 @@ import styled, { css } from 'styled-components';
 import { mainTone, gray, blue, shadow } from '../Constants/Styles';
 import { AppContext } from '../Context/AppContext/AppProvider';
 
+import { lang } from '../Language/Lang';
+
 const Logo = styled.div`
 	font-size: 1.5rem;
 `;
@@ -43,13 +45,15 @@ const ControlButtonElem = styled.div`
 `;
 
 const ControlButton = ({ name, lang = false, theme = false }) => {
-	const { page, setPage, setLocale, setTheme, firstVisit } = useContext(
+	const { page, setPage, setLocale, setTheme, firstVisit, locale } = useContext(
 		AppContext
 	);
+	const localeLang = locale === 'en' ? lang.en : lang.tr;
+
 	return (
 		<ControlButtonElem
 			active={page === name}
-			hidden={firstVisit && name === 'dashboard'}
+			hidden={firstVisit && name === localeLang.dashboard}
 			onClick={() => {
 				!lang && !theme ? setPage(name) : !lang ? setTheme() : setLocale();
 			}}
@@ -61,14 +65,18 @@ const ControlButton = ({ name, lang = false, theme = false }) => {
 
 const AppBar = () => {
 	const { locale, theme } = useContext(AppContext);
+	const localeLang = locale === 'en' ? lang.en : lang.tr;
 
 	return (
 		<Bar>
 			<Logo>CurrenDashcy</Logo>
 			<div />
-			<ControlButton active name='dashboard' />
-			<ControlButton name='settings' />
-			<ControlButton theme name={theme} />
+			<ControlButton active name={localeLang.dashboard} />
+			<ControlButton name={localeLang.settings} />
+			<ControlButton
+				theme={theme}
+				name={theme === 'light' ? localeLang.light : localeLang.dark}
+			/>
 			<ControlButton lang name={locale} />
 		</Bar>
 	);

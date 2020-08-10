@@ -1,16 +1,18 @@
 import React, { useContext } from 'react';
 import { AppContext } from '../Context/AppContext/AppProvider';
 
+import { lang } from '../Language/Lang';
+
 const Welcome = ({ name }) => {
-	const { firstVisit } = useContext(AppContext);
+	const { firstVisit, locale } = useContext(AppContext);
+	const localeLang = locale === 'en' ? lang.en : lang.tr;
 
 	return firstVisit ? (
-		<div>
-			Welcome to CurrenDashcy, please select your favourite currencies/coins to
-			continue.
-		</div>
+		<div>{localeLang.welcomeMessage}</div>
 	) : (
-		<div> Hello, {name || 'Guest'}...</div>
+		<div>
+			{localeLang.hello}, {name || localeLang.guest}...
+		</div>
 	);
 };
 
