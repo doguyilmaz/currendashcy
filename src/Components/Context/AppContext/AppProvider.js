@@ -44,10 +44,12 @@ export class AppProvider extends React.Component {
 		this.localeLang = this.state.locale === 'en' ? lang.en : lang.tr;
 	}
 	componentDidMount() {
-		if (localStorage.getItem('locale') === 'en') {
-			this.setState({ page: 'dashboard' });
-		} else {
-			this.setState({ page: 'panel' });
+		if (!this.state.firstVisit) {
+			if (localStorage.getItem('locale') === 'en') {
+				this.setState({ page: 'dashboard' });
+			} else {
+				this.setState({ page: 'panel' });
+			}
 		}
 		this.fetchCoins();
 		this.fetchCurrencies();
