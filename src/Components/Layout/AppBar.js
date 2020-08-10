@@ -53,7 +53,7 @@ const ControlButton = ({ name, lang = false, theme = false }) => {
 	return (
 		<ControlButtonElem
 			active={page === name}
-			hidden={firstVisit && name === localeLang.dashboard}
+			hidden={firstVisit && name === (locale === 'en' ? 'dashboard' : 'panel')}
 			onClick={() => {
 				!lang && !theme ? setPage(name) : !lang ? setTheme() : setLocale();
 			}}
