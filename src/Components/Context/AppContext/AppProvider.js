@@ -16,11 +16,7 @@ cc.setApiKey(
 
 const MAX_FAVOURITES = 10;
 
-export const AppContext = React.createContext({
-	page: 'dashboard',
-	locale: 'en',
-	theme: 'light',
-});
+export const AppContext = React.createContext();
 
 export class AppProvider extends React.Component {
 	constructor(props) {
@@ -45,8 +41,14 @@ export class AppProvider extends React.Component {
 			changeChartInterval: this.changeChartInterval,
 			changeChartPeriod: this.changeChartPeriod,
 		};
+		this.localeLang = this.state.locale === 'en' ? lang.en : lang.tr;
 	}
 	componentDidMount() {
+		if (localStorage.getItem('locale') === 'en') {
+			this.setState({ page: 'dashboard' });
+		} else {
+			this.setState({ page: 'panel' });
+		}
 		this.fetchCoins();
 		this.fetchCurrencies();
 		this.fetchHistorical();
@@ -76,7 +78,10 @@ export class AppProvider extends React.Component {
 		let returnData = [];
 		for (let i = 0; i < this.state.favourites.length; i++) {
 			try {
-				const priceData = await cc.priceFull(this.state.favourites[i], 'USD');
+				const priceData = await cc.priceFull(
+					this.state.favourites[i],
+					this.state.locale === 'en' ? 'USD' : 'TRY'
+				);
 				returnData.push(priceData);
 			} catch (error) {
 				console.warn('Fething currency error => ', error);
@@ -98,7 +103,7 @@ export class AppProvider extends React.Component {
 								this.state.historicalPeriod - idx,
 						})
 						.valueOf(),
-					value.USD,
+					this.state.locale === 'en' ? value.USD : value.TRY,
 				]),
 			},
 		];
@@ -114,7 +119,7 @@ export class AppProvider extends React.Component {
 			promises.push(
 				cc.priceHistorical(
 					this.state.currentFav,
-					['USD'],
+					[`${this.state.locale === 'en' ? 'USD' : 'TRY'}`],
 					moment()
 						.subtract({ [this.state.historicalInterval]: units })
 						.toDate()
@@ -137,7 +142,7 @@ export class AppProvider extends React.Component {
 		this.setState(
 			{
 				firstVisit: false,
-				page: 'dashboard',
+				page: this.localeLang.dashboard,
 				currentFav,
 				prices: null,
 				historical: null,
@@ -185,7 +190,7 @@ export class AppProvider extends React.Component {
 
 		if (!currendDashcyData) {
 			localData = {
-				page: this.state.locale === 'en' ? 'settings' : 'ayarlar',
+				page: locale === 'en' ? 'settings' : 'ayarlar',
 				firstVisit: true,
 			};
 		} else {
@@ -204,17 +209,20 @@ export class AppProvider extends React.Component {
 	setFilteredCoins = (filteredCoins) => this.setState({ filteredCoins });
 
 	setLocale = () => {
-		this.setState({
-			locale: this.state.locale === 'en' ? 'tr' : 'en',
-			page:
-				this.state.page === ('dashboard' || 'panel')
-					? this.state.locale === 'en'
-						? 'dashboard'
-						: 'panel'
-					: this.state.locale === 'en'
-					? 'settings'
-					: 'ayarlar',
-		});
+		this.setState(
+			{
+				locale: this.state.locale === 'en' ? 'tr' : 'en',
+				page:
+					this.state.page === 'dashboard' || this.state.page === 'panel'
+						? this.state.page === 'dashboard'
+							? 'panel'
+							: 'dashboard'
+						: this.state.page === 'settings'
+						? 'ayarlar'
+						: 'settings',
+			},
+			window.location.reload()
+		);
 		localStorage.setItem('locale', this.state.locale === 'en' ? 'tr' : 'en');
 	};
 

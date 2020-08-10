@@ -13,7 +13,7 @@ const toFixCustom = (currency) => {
 };
 
 const CurrencyTile = ({ symbol, data, compact }) => {
-	const { currentFav, setCurrentFav } = useContext(AppContext);
+	const { currentFav, setCurrentFav, locale } = useContext(AppContext);
 
 	const { PRICE: price, CHANGEPCT24HOUR: change24 } = data;
 	return (
@@ -26,7 +26,8 @@ const CurrencyTile = ({ symbol, data, compact }) => {
 				<div>{symbol} </div>
 				<RatePercentage>{toFixCustom(change24)}% </RatePercentage>
 				<TickerCurrency negative={change24 < 0}>
-					${toFixCustom(price)}
+					{locale === 'en' ? '$' : 'TL'}
+					{toFixCustom(price)}
 				</TickerCurrency>
 				<RateArrow status={change24 < 0}>{change24 < 0 ? '⬇' : '⬆'}</RateArrow>
 			</CoinHeaderGridStyled>
@@ -34,9 +35,9 @@ const CurrencyTile = ({ symbol, data, compact }) => {
 	);
 };
 
-const CurrencyBox = ({ currency, index }) => {
+const CurrencyBox = ({ currency, index, locale }) => {
 	const symbol = Object.keys(currency)[0];
-	const data = currency[symbol]['USD'];
+	const data = currency[symbol][`${locale === 'en' ? 'USD' : 'TRY'}`];
 	return <CurrencyTile compact={index >= 5} symbol={symbol} data={data} />;
 };
 

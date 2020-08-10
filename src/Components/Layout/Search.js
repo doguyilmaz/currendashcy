@@ -6,10 +6,13 @@ import fuzzy from 'fuzzy';
 import { backgroundColor2, fontSize2, fontF } from '../Constants/Styles';
 import { AppContext } from '../Context/AppContext/AppProvider';
 
+import { lang } from '../Language/Lang';
+
 const SearchGrid = styled.div`
 	display: grid;
-	grid-template-columns: 200px auto;
+	grid-template-columns: auto auto;
 	justify-content: center;
+	grid-gap: 20px;
 `;
 
 const SearchInput = styled.input`
@@ -53,11 +56,12 @@ const filterCoins = (e, setCoins, list) => {
 };
 
 const Search = () => {
-	const { setFilteredCoins, coinList } = useContext(AppContext);
+	const { setFilteredCoins, coinList, locale } = useContext(AppContext);
+	const localeLang = locale === 'en' ? lang.en : lang.tr;
 
 	return (
 		<SearchGrid>
-			<h2>Search all coins</h2>
+			<h2>{localeLang.searchAllCoins}</h2>
 			<SearchInput
 				onKeyUp={(e) => filterCoins(e, setFilteredCoins, coinList)}
 			/>
