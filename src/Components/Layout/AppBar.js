@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import styled, { css } from 'styled-components';
-
+import { mainTone, gray, blue, shadow } from '../Constants/Styles';
 import { AppContext } from '../Context/AppContext/AppProvider';
 
 const Logo = styled.div`
@@ -10,7 +10,7 @@ const Logo = styled.div`
 const Bar = styled.div`
 	display: grid;
 	grid-template-columns: 180px auto 100px 100px 70px 50px;
-	color: gray;
+	color: ${gray};
 	margin-bottom: 30px;
 	text-align: center;
 `;
@@ -20,19 +20,19 @@ const ControlButtonElem = styled.div`
 	transition: 0.2s all;
 
 	&:hover {
-		color: lightblue;
-		text-shadow: 0px 0px 25px lightblue;
+		color: ${blue};
+		text-shadow: 0px 0px 25px ${blue};
 	}
 
 	${(props) =>
 		props.active &&
 		css`
-			color: wheat;
-			text-shadow: 0px 0px 25px yellow;
+			color: ${mainTone};
+			text-shadow: 0px 0px 25px ${shadow};
 
 			&:hover {
-				color: wheat;
-				text-shadow: 0px 0px 25px yellow;
+				color: ${mainTone};
+				text-shadow: 0px 0px 25px ${shadow};
 			}
 		`}
   $${(props) =>

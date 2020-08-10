@@ -1,6 +1,9 @@
-const theme = 'dark';
-//const theme = 'light';
-export const lightTheme = theme === 'light';
+const appTheme = localStorage.getItem('theme');
+
+// const theme = 'dark';
+// const theme = 'light';
+
+export const lightTheme = appTheme === 'light';
 
 export const color = lightTheme ? 'white' : 'black';
 export const color2 = lightTheme ? 'white' : '#010e2c';
@@ -12,7 +15,9 @@ if (lightTheme) {
 }
 
 export const lightBlueBackground = `background-color: ${color}`;
-export const backgroundColor2 = `background-color: ${color2};`;
+export const backgroundColor2 = `background-color: ${
+	lightTheme ? 'white' : 'black'
+}`;
 export const greenBackgroundColor = `background-color: ${color3};`;
 
 export const fontColorGreen = `color: #03A9F4`;
@@ -23,7 +28,9 @@ export const subtleBoxShadow = `box-shadow: 0px 0px 5px 1px ${
 
 // 41465e
 // 2f3242
-export const wheatBoxShadow = `box-shadow: 0px 0px 4px 2px wheat`;
+export const wheatBoxShadow = `box-shadow: 0px 0px 4px 2px ${
+	lightTheme ? 'gray' : 'wheat'
+}`;
 export const redBoxShadow = `box-shadow: 0px 0px 2px 2px #e41111`;
 
 export const fontSizeBig = 'font-size: 2em';
@@ -34,3 +41,12 @@ export const fontSize3 = 'font-size: .75em';
 export const fontF = "font-family: 'Recursive', sans-serif";
 
 export const textAlignCenter = 'text-align: center;';
+
+export const reddish = lightTheme ? 'red' : 'darkred';
+export const greeny = lightTheme ? 'lightgreen' : 'darkgreen';
+export const gray = lightTheme ? 'lightblue' : 'gray';
+export const lightgray = lightTheme ? 'lightgray' : 'lightgray';
+export const blue = lightTheme ? 'green' : 'lightblue';
+export const mainTone = lightTheme ? 'black' : 'wheat';
+export const selectBg = lightTheme ? 'white' : 'black';
+export const shadow = lightTheme ? 'blue' : 'yellow';
