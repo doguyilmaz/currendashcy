@@ -22,6 +22,7 @@ export const lang = {
 		loadingCoins: 'Loading Coins...',
 		loadingCurrencies: 'Loading Currencies...',
 		loadingHistoricalData: 'Loading Historical Data...',
+		logout: 'Logout',
 		welcomeMessage:
 			'Welcome to CurrenDashcy, please select your favourite currencies/coins to continue.',
 	},
@@ -48,6 +49,7 @@ export const lang = {
 		loadingCoins: "Coin'ler yükleniyor...",
 		loadingCurrencies: 'Değerler yükleniyor...',
 		loadingHistoricalData: 'Geçmiş Veriler Yükleniyor...',
+		logout: 'Çıkış',
 		welcomeMessage:
 			"CurrenDashcy'e hoşgeldiniz, devam etmek için lütfen favori coinlerinizi seçiniz.",
 	},

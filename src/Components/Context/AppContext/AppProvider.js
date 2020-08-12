@@ -40,6 +40,7 @@ export class AppProvider extends React.Component {
 			setCurrentFav: this.setCurrentFav,
 			changeChartInterval: this.changeChartInterval,
 			changeChartPeriod: this.changeChartPeriod,
+			logout: this.logout,
 		};
 		this.localeLang = this.state.locale === 'en' ? lang.en : lang.tr;
 	}
@@ -55,6 +56,22 @@ export class AppProvider extends React.Component {
 		this.fetchCurrencies();
 		this.fetchHistorical();
 	}
+
+	logout = () => {
+		// clear local storage
+		// setFirstVisit: null
+		// page: settings/ayarlar
+		// fav = []
+		localStorage.removeItem('currenDashcy');
+		this.setState({
+			firstVisit: null,
+			favourites: [],
+			currentFav: null,
+			filteredCoins: null,
+			page: this.state.locale === 'en' ? 'settings' : 'ayarlar',
+		});
+		window.location.reload();
+	};
 
 	fetchCoins = async () => {
 		let coinList = (await cc.coinList()).Data;
