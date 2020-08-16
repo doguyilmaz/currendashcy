@@ -15,10 +15,10 @@ const ChartSelect = ({
 	const basicOptionWriter = (val) => {
 		return `${val}-${
 			historicalInterval === 'months'
-				? `${localeLang.day}`
+				? `${localeLang.month}`
 				: historicalInterval === 'weeks'
 				? `${localeLang.week}`
-				: `${localeLang.month}`
+				: `${localeLang.day}`
 		}`;
 	};
 	return (

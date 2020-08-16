@@ -6,7 +6,9 @@ import { lang } from '../../Language/Lang';
 
 const cc = require('cryptocompare');
 // LATER: change api key
-cc.setApiKey(process.env.CC_API_KEY);
+cc.setApiKey(
+	'f3823db3d72b1912d435f973aa3015c1c858beb3a7ad9126886d4388b5585267'
+);
 
 // TODO: clear data local storage favs etc.
 // TODO: theme all / languages
@@ -38,19 +40,38 @@ export class AppProvider extends React.Component {
 			setCurrentFav: this.setCurrentFav,
 			changeChartInterval: this.changeChartInterval,
 			changeChartPeriod: this.changeChartPeriod,
+			logout: this.logout,
 		};
 		this.localeLang = this.state.locale === 'en' ? lang.en : lang.tr;
 	}
 	componentDidMount() {
-		if (localStorage.getItem('locale') === 'en') {
-			this.setState({ page: 'dashboard' });
-		} else {
-			this.setState({ page: 'panel' });
+		if (!this.state.firstVisit) {
+			if (localStorage.getItem('locale') === 'en') {
+				this.setState({ page: 'dashboard' });
+			} else {
+				this.setState({ page: 'panel' });
+			}
 		}
 		this.fetchCoins();
 		this.fetchCurrencies();
 		this.fetchHistorical();
 	}
+
+	logout = () => {
+		// clear local storage
+		// setFirstVisit: null
+		// page: settings/ayarlar
+		// fav = []
+		localStorage.removeItem('currenDashcy');
+		this.setState({
+			firstVisit: null,
+			favourites: [],
+			currentFav: null,
+			filteredCoins: null,
+			page: this.state.locale === 'en' ? 'settings' : 'ayarlar',
+		});
+		window.location.reload();
+	};
 
 	fetchCoins = async () => {
 		let coinList = (await cc.coinList()).Data;

@@ -4,9 +4,9 @@ import { CoinImageStyled } from '../Constants/Dashboard';
 const CoinImage = ({ coin, spotlight }) => {
 	return (
 		<CoinImageStyled
-			alt={coin.CoinSymbol}
+			alt={coin ? coin.CoinSymbol : `e`}
 			spotlight={spotlight}
-			src={`http://cryptocompare.com/${coin.ImageUrl}`}
+			src={`http://cryptocompare.com/${coin && coin.ImageUrl}`}
 		/>
 	);
 };

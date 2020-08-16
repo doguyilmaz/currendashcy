@@ -8,14 +8,15 @@ const CurrencyGrid = () => {
 
 	return (
 		<CurrencyStyled>
-			{currencies.map((currency, idx) => (
-				<CurrencyBox
-					key={idx}
-					currency={currency}
-					index={idx}
-					locale={locale}
-				/>
-			))}
+			{currencies &&
+				currencies.map((currency, idx) => (
+					<CurrencyBox
+						key={idx}
+						currency={currency}
+						index={idx}
+						locale={locale}
+					/>
+				))}
 		</CurrencyStyled>
 	);
 };
