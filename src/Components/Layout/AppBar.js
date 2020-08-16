@@ -37,11 +37,13 @@ const ControlButtonElem = styled.div`
 				text-shadow: 0px 0px 25px ${shadow};
 			}
 		`}
+    
   ${(props) =>
 		props.hidden &&
 		css`
 			display: none;
 		`}
+    
     ${(props) =>
 			props.logO &&
 			css`

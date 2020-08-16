@@ -33,16 +33,23 @@ const handleFilter = _.debounce((input, coinList, setFilterCoins) => {
 	const coinNames = coinSymbols.map((symbol) => coinList[symbol].CoinName);
 	// combine the search strings names&symbols
 	const searchString = [...coinSymbols, ...coinNames];
+	console.log('searchString', searchString);
 	const fuzzyResult = fuzzy
 		.filter(input, searchString, {})
 		.map((res) => res.string);
 
+	console.log('fuzzyResult', fuzzyResult);
 	const filteredCoins = _.pickBy(coinList, (result, symbolKey) => {
 		const coinName = result.CoinName;
 		return (
 			_.includes(fuzzyResult, symbolKey) || _.includes(fuzzyResult, coinName)
 		);
 	});
+
+	console.log('1', filteredCoins);
+	console.log(Object.assign([], filteredCoins).reverse());
+	console.log(filteredCoins);
+
 	setFilterCoins(filteredCoins);
 }, 500);
 
